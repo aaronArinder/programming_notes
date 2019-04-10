@@ -1,4 +1,6 @@
 /*
+ * FP-light team demo notes
+ *
  * The real benefit of currying is partial application, and a benefit of
  * partial application is the ability to control the order of what happens.
  *
@@ -16,7 +18,6 @@ const pipe = (obj => (fn) => fn ? pipe(fn(obj)) : obj);
 
 // assignment assigns fn, not finished value
 const { obj, memory } = pipe(originalObj)(clone)(initializeMemory)(addKeys)(memorize)(flipKeysValues)(memorize)(flipKeysValues)(finish)();
-
 
 
 
