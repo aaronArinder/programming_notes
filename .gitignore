@@ -1,4 +1,6 @@
 *.swp
-/ocw_edX/.mp4
-/ocw_edX/**/.mp4
-/ocw_edX/**/**/.mp4
+/ocw_edX/*.mp4
+/ocw_edX/**/*.mp4
+/ocw_edX/**/**/*.mp4
+/ocw_edX/**/**/**/*.mp4
+/ocw_edX/**/**/**/**/*.mp4
