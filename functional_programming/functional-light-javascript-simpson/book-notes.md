@@ -78,4 +78,37 @@ Some folks think that closures are immutable, but that objects are mutable. This
 
 
 
+#### Ch. 8: Recursion
+<b>Summary:</b> recursion done well can be quite readable, and there are ways to ‘optimize’ recursion to free up memory, though not necessary shorten the time it takes to run.
+
+Functional programmers like recursion because it trades explicitly tracking the program’s state with implicitly tracking it in the call stack. So, rather than setting up variables in the program’s scope, those values are held within the recursive call stack, keeping their applicable scope limited to that stack. This keeps the program readable by reducing what needs to be tracked.
+
+Recursion can be memory intensive, though, as the JS engine sets aside a small chunk of memory for each function called. It sets aside memory because it doesn’t know whether another function will be called, which would pause the execution of the first function, requiring its internal state to be kept track of in order to eventually return to it. With recursion, we could set aside more memory than is available, thereby overflowing the stack. [^3]
+
+One way to keep from overflowing the stack is to use tail call recursion. Tail call recursion is a method of writing functions that frees up memory when the engine knows it won’t be used. Consider the diagram below [see the png in this directory]. The leftmost block represents a stack of memory used by function A calling B, which in turn calls C. The rightmost block represents the same call structure, but using tail recursion to free up memory.
+
+In JavaScript, ES6 makes tail recursion available. When a function explicitly returns another function, the engine knows that the memory freed up for the originally function won’t be needed. That is, `function A () { return B(); }` will free up the memory set aside for A.
+
+[^3] The JS engine will throw an error before we actually run out of memory, presumably to keep the rest of the system stable.
+
+#### Ch. 9: List Operations
+
+<b>Summary:</b> operations like some, every, and forEach allow for bad mutations of the data being iterated over, whereas operations that return new arrays, such as filter, map, and so on, don’t mutate the original array and should thereby be preferred. This was a somewhat disappointing chapter in that its length far outreached its content.
+
+#### Ch 10: Functional Async
+
+<b>Summary:</b> readable asynchronous code can be difficult to write. There are data structures (that aren’t native to ecmascript) that make it easier to write readable asynchronous code, such as Observables. This chapter was disappointing: ‘make your code readable with this sweet data structure, but you have to use a library for it’, and there wasn’t any discussion on how to best implement currently supported language features functionally, like Promises.
+
+One data structure that allows for readable asynchronous code is an Observable. An Observable lets you assign a reactive function to other data structure, such that a change in those data structures runs the reactive function, handling that change in some fashion. Observables are currently (Feb 5th, 2019) Stage 1 of ecmascript implementation. When/if they make it into the language, they’ll certainly make asynchronous code more readable.
+
+#### Ch 11: Putting It All Together
+<b>Summary:</b> there’s an example project exemplifying the functional programming techniques described above. It’s useful for reviewing those techniques in actual code, so check it out periodically.
+
+#### Misc claims and definitions
+Claim: functional programming is more bug-resistant by making bugs easier to track and easier to spot.
+
+Arity of a function: number of params a function takes in.
+
+Fn.length: returns number of args a function expects; useful for currying. Pg. 71. Won’t work well with default parameters, destructuring, or variadic ...args.
+
 
