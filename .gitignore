@@ -1,2 +1,3 @@
 *.swp
 !/ocw_edX/notes
+**/**/node_modules/*
