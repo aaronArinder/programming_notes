@@ -1,5 +1,12 @@
 'use strict';
 
+/*
+ * Goal of this example is for reference later on. This mocks part of the client/auth server
+ * exchange. It's meant to demonstrate _only_ the pkce part of that exchange, not a fully-fledged
+ * auth code/access token flow. So, uh, if you find this, don't just copy/paste it. It's purely
+ * an academic example of what pkce's structure looks like.
+ * */
+
 const crypto = require('crypto');
 const axios  = require('axios');
 
@@ -25,6 +32,8 @@ async function mockAuthFlow () {
   try {
     await axios.get(`http://localhost:7777/authorization_code?code_challenge=${challenge}`);
     const { data: { result } } = await axios.get(`http://localhost:7777/access_token?code_verifier=${verifier}`);
+    // returning a boolean for whether the challenge was created with the verifier; normally this
+    // would be the access token
     console.log('result', result);
   } catch (err) {
     console.error(`woops: ${err}`);
