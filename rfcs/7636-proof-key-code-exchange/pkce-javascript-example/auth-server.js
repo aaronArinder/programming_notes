@@ -24,6 +24,7 @@ server.get('/authorization_code', (req, res) => {
   return res.status(200).send({});
 });
 
+// obviously not oauth2 or pkce; but, intended to show how the comparison part of pkce works
 server.get('/access_token', (req, res) => {
   const verifier = req.query.code_verifier;
 
