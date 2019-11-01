@@ -1,0 +1,34 @@
+OAuth2 gained wide acceptance, but the following challenges emerged:
+
+  - Anti-patterns and implementation weaknesses are vectors of attack for OAuth2.
+    See RFC6819 for more details.
+  - Technology has changed such that the implicit grant's security model has changed.
+  - OAuth2 is used in environments with stricter security requirements (eGovernment,
+    eBanking, etc.) calling for additional guidelines.
+  - OAuth2 is used in dynamic setups (whatever that means), posing new challenges to security
+    that the original RFC's scope didn't consider.
+
+Expands attacker model, laying out what MUST prevented attacker-wise to be OAuth2
+
+- auth servers MUST utilize exact matching of client redirect URIs against pre-registered URIs.
+- clients SHOULD avoid forwarding the user's browser to a URI obtained from a query param to prevent exfiltration of auth codes and access tokens
+- clients MUST prevent cross-site request-forgery (CSRF)
+- something about mix-up attacks and using the same auth server
+- clients using auth grant type MUST use PKCE in order to detect and prevent attempts to inject (replay) auth codes into auth response
+- Clients SHOULD use PKCE code challenge methods that don't expose PKCE verifiy in auth request
+- auth server must support PKCE (RFC7636)
+- auth servers SHOULD provide a way to detect their support for PKCE
+
+
+- no access_tokens in query params: they get into browser history, and can be used if the device is compromised
+
+- mix-up auth attack is an attacker intercepting a request, changing the auth endpoint to the attacker's. (There are some preconditions that must be met.)
+  - return client_id and authorization server identifier for which a code or token was issued in the auth response. This lets clients compare that data to its own records.
+
+- use 302 status code to redirect, not 307: 307 can replay original POST content
+
+- to prevent phishing, we could return a `access_token_resource_server key in the response body with the URL(s) an access token is good for. This puts the security concern on the client, which isn't a terrible idea. 4.8.1.1.
+
+
+
+
